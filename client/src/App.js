@@ -1,9 +1,10 @@
 import React from "react";
+require("dotenv").config();
 
 const App = () => {
   return (
     <div>
-      <h1>App</h1>
+      <h1>{process.env.REACT_APP_URL}</h1>
     </div>
   );
 };
