@@ -14,7 +14,7 @@ const Form = () => {
     title: "",
     message: "",
     tags: "",
-    selectorFile: "",
+    selectedFile: "",
   });
 
   const handleSubmit = (e) => {
@@ -48,7 +48,7 @@ const Form = () => {
           variant="outlined"
           label="Title"
           fullWidth
-          value={postData.creator}
+          value={postData.title}
           onChange={(e) => setpostData({ ...postData, title: e.target.value })}
         />
         <TextField
@@ -56,7 +56,7 @@ const Form = () => {
           variant="outlined"
           label="Message"
           fullWidth
-          value={postData.creator}
+          value={postData.message}
           onChange={(e) =>
             setpostData({ ...postData, message: e.target.value })
           }
@@ -66,7 +66,7 @@ const Form = () => {
           variant="outlined"
           label="Tags"
           fullWidth
-          value={postData.creator}
+          value={postData.tags}
           onChange={(e) => setpostData({ ...postData, tags: e.target.value })}
         />
         <div className={classes.fileInput}>
@@ -74,7 +74,7 @@ const Form = () => {
             type="file"
             multiple={false}
             onDone={({ base64 }) => {
-              setpostData({ ...postData, selectorFile: base64 });
+              setpostData({ ...postData, selectedFile: base64 });
             }}
           />
         </div>
