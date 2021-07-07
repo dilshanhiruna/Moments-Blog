@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, AppBar, Typography, Grow, Grid } from "@material-ui/core";
 import moments from "./images/moments.png";
 import { getPosts } from "./actions/posts";
@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 require("dotenv").config();
 
 const App = () => {
+  const [currentId, setcurrentId] = useState(null);
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -39,10 +40,10 @@ const App = () => {
             spacing={3}
           >
             <Grid item xs={12} sm={7}>
-              <Posts />
+              <Posts setcurrentId={setcurrentId} />
             </Grid>
             <Grid item xs={12} sm={4}>
-              <Form />
+              <Form currentId={currentId} setcurrentId={setcurrentId} />
             </Grid>
           </Grid>
         </Container>
