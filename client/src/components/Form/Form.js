@@ -91,7 +91,9 @@ const Form = ({ currentId, setcurrentId }) => {
           label="Tags"
           fullWidth
           value={postData.tags}
-          onChange={(e) => setpostData({ ...postData, tags: e.target.value })}
+          onChange={(e) =>
+            setpostData({ ...postData, tags: e.target.value.split(",") })
+          }
         />
         <div className={classes.fileInput}>
           <FileBase
