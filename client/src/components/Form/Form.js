@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 import useStyles from "./styles";
 import { TextField, Button, Typography, Paper } from "@material-ui/core";
 import FileBase from "react-file-base64";
-import { useDispatch } from "react-redux";
 import { createPost, updatePost } from "../../actions/posts";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 const Form = ({ currentId, setcurrentId }) => {
   const classes = useStyles();
@@ -33,9 +32,19 @@ const Form = ({ currentId, setcurrentId }) => {
     } else {
       dispatch(createPost(postData));
     }
+    clear();
   };
 
-  const clear = () => {};
+  const clear = () => {
+    setcurrentId(null);
+    setpostData({
+      creator: "",
+      title: "",
+      message: "",
+      tags: "",
+      selectedFile: "",
+    });
+  };
 
   return (
     <Paper className={classes.paper}>
@@ -45,7 +54,9 @@ const Form = ({ currentId, setcurrentId }) => {
         className={`${classes.root} ${classes.form}`}
         onSubmit={handleSubmit}
       >
-        <Typography variant="h6">Create a Memory</Typography>
+        <Typography variant="h6">
+          {currentId ? "Editing" : "Create"} a Memory
+        </Typography>
         <TextField
           name="creator"
           variant="outlined"
