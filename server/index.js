@@ -14,11 +14,18 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 app.use("/posts", PostRouter);
 
+app.get("/", (req, res) => {
+  res.send("Hello to moments API");
+});
+
 const URL = process.env.MONGODB_URL;
 const PORT = process.env.PORT || 5000;
 
 mongoose
-  .connect(URL, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(
+    "mongodb+srv://dilshan:dilshan11@cluster0.xjbcs.mongodb.net/moment?retryWrites=true&w=majority",
+    { useNewUrlParser: true, useUnifiedTopology: true }
+  )
   .then(() => {
     app.listen(PORT, () => {
       console.log(`Server running on port: ${PORT}`);
