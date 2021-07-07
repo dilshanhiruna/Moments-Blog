@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import useStyles from "./styles";
 import { TextField, Button, Typography, Paper } from "@material-ui/core";
 import FileBase from "react-file-base64";
 import { useDispatch } from "react-redux";
 import { createPost, updatePost } from "../../actions/posts";
+import { useSelector } from "react-redux";
 
 const Form = ({ currentId, setcurrentId }) => {
   const classes = useStyles();
@@ -16,6 +17,13 @@ const Form = ({ currentId, setcurrentId }) => {
     tags: "",
     selectedFile: "",
   });
+  const post = useSelector((state) =>
+    currentId ? state.posts.find((p) => p._id === currentId) : null
+  );
+
+  useEffect(() => {
+    if (post) setpostData(post);
+  }, [post]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

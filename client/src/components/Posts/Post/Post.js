@@ -28,7 +28,13 @@ const Post = ({ post, setcurrentId }) => {
         <Typography variant="h6">{moment(post.createdAt).fromNow()}</Typography>
       </div>
       <div className={classes.overlay2}>
-        <Button style={{ color: "white" }} size="small" onClick={() => {}}>
+        <Button
+          style={{ color: "white" }}
+          size="small"
+          onClick={() => {
+            setcurrentId(post._id);
+          }}
+        >
           <MoreHiriIcon fontSize="default" />
         </Button>
       </div>
@@ -43,13 +49,7 @@ const Post = ({ post, setcurrentId }) => {
         </Typography>
       </CardContent>
       <CardActions className={classes.cardActions}>
-        <Button
-          size="small"
-          color="primary"
-          onClick={() => {
-            setcurrentId(post._id);
-          }}
-        >
+        <Button size="small" color="primary" onClick={() => {}}>
           <ThumbUpAltIcon fonstSize="small" />
           Like
           {post.likeCount}
