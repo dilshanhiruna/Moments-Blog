@@ -20,3 +20,4 @@ export const deletePost = (id) => {
 export const likePost = (id) => {
   axios.patch(`${url}/${id}/likePost`);
 };
+
