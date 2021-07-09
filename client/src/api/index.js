@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// const url = process.env.REACT_APP_URL + "posts";
-const url = "https://moment-blog.herokuapp.com/posts";
+const url = process.env.REACT_APP_URL + "posts";
+// const url = "https://moment-blog.herokuapp.com/posts";
 
 export const fetchPosts = () => axios.get(url);
 
