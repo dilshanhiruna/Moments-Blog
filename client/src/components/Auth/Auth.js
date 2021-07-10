@@ -6,21 +6,44 @@ import {
   Grid,
   Typography,
   Container,
-  TextField,
+  Icon,
 } from "@material-ui/core";
 import useStyles from "./styles";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Input from "./input";
+import { GoogleLogin } from "react-google-login";
+import Icn from "./icon";
+import { useDispatch } from "react-redux";
 
 export const Auth = () => {
   const classes = useStyles();
-  const isSignup = true;
+  const [isSignup, setisSignup] = useState(false);
   const [showPassword, setshowPassword] = useState(false);
+  const dispatch = useDispatch();
 
   const handleSubmit = () => {};
   const handleChange = () => {};
   const handleShowPassword = () =>
     setshowPassword((prevShowPassword) => !prevShowPassword);
+
+  const switchMode = () => {
+    setisSignup((prev) => !prev);
+    handleShowPassword(false);
+  };
+
+  const googleFalure = () => {
+    console.log("Google Sign In was unsuccessful");
+  };
+  const googleSucess = async (res) => {
+    const result = res?.profileObj;
+    const token = res?.tokenId;
+
+    try {
+      dispatch({ type: "AUTH", data: { result, token } });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -38,6 +61,7 @@ export const Auth = () => {
                   label="First Name"
                   handleChange={handleChange}
                   autoFocus
+                  half
                   xs={6}
                 />
                 <Input
@@ -45,6 +69,7 @@ export const Auth = () => {
                   label="Last Name"
                   handleChange={handleChange}
                   autoFocus
+                  half
                   xs={6}
                 />
               </>
@@ -82,6 +107,34 @@ export const Auth = () => {
           >
             {isSignup ? "Sign Up" : "Sign In"}
           </Button>
+          <GoogleLogin
+            clientId="230901672313-1iet3pcobo3lae167qnp7k5div55eibk.apps.googleusercontent.com"
+            render={(renderProps) => (
+              <Button
+                className={classes.googleButton}
+                color="primary"
+                fullWidth
+                onClick={renderProps.onClick}
+                disable={renderProps.disabled}
+                startIcon={<Icn />}
+                variant="contained"
+              >
+                Google Sign In
+              </Button>
+            )}
+            onSuccess={googleSucess}
+            onFailure={googleFalure}
+            cookiePolicy="single_host_origin"
+          />
+          <Grid container justify="flex-end">
+            <Grid item>
+              <Button onClick={switchMode}>
+                {isSignup
+                  ? "Already have an account? Sign In"
+                  : "Don't have an account? Sign Up"}
+              </Button>
+            </Grid>
+          </Grid>
         </form>
       </Paper>
     </Container>
