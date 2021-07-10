@@ -1,13 +1,28 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import useStyles from "./style";
+import { useDispatch } from "react-redux";
 import { AppBar, Avatar, Button, Toolbar, Typography } from "@material-ui/core";
 import moments from "../../images/moments.png";
+import { useHistory, Link, useLocation } from "react-router-dom";
 
 export const NavBar = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const location = useLocation();
+  const [user, setuser] = useState(JSON.parse(localStorage.getItem("profile")));
 
-  const [user, setuser] = useState(JSON.parse);
+  useEffect(() => {
+    const token = user?.token;
+
+    setuser(JSON.parse(localStorage.getItem("profile")));
+  }, [location]);
+
+  const logout = () => {
+    dispatch({ type: "LOGOUT" });
+    history.push("/");
+    setuser(null);
+  };
 
   return (
     <AppBar className={classes.appBar} position="static" color="inherit">
@@ -39,12 +54,13 @@ export const NavBar = () => {
               {user.result.name.imageUrl}
             </Avatar>
             <Typography className={classes.userName} variant="h6">
-              {user.result.name.name}
+              {user.result.name}
             </Typography>
             <Button
               variant="contained"
               className={classes.logout}
               color="secondary"
+              onClick={logout}
             >
               Logout
             </Button>

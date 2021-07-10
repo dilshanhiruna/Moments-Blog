@@ -14,13 +14,14 @@ import Input from "./input";
 import { GoogleLogin } from "react-google-login";
 import Icn from "./icon";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 export const Auth = () => {
   const classes = useStyles();
   const [isSignup, setisSignup] = useState(false);
   const [showPassword, setshowPassword] = useState(false);
   const dispatch = useDispatch();
-
+  const history = useHistory();
   const handleSubmit = () => {};
   const handleChange = () => {};
   const handleShowPassword = () =>
@@ -40,6 +41,7 @@ export const Auth = () => {
 
     try {
       dispatch({ type: "AUTH", data: { result, token } });
+      history.push("/");
     } catch (error) {
       console.log(error);
     }
