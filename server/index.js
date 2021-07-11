@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 import PostRouter from "./routes/posts.js";
+import PostRouter from "./routes/user.js";
 
 dotenv.config();
 
@@ -13,6 +14,7 @@ app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 app.use("/posts", PostRouter);
+app.use("/user", userRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello to moments API");
