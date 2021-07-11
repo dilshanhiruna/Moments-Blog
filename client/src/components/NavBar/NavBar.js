@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { AppBar, Avatar, Button, Toolbar, Typography } from "@material-ui/core";
 import moments from "../../images/moments.png";
 import { useHistory, Link, useLocation } from "react-router-dom";
+import decode from "jwt-decode";
 
 export const NavBar = () => {
   const classes = useStyles();
@@ -14,6 +15,11 @@ export const NavBar = () => {
 
   useEffect(() => {
     const token = user?.token;
+
+    if (token) {
+      const decodeToken = decode(token);
+      if (decodeToken.exp * 1000 < new Date().getTime()) logout();
+    }
 
     setuser(JSON.parse(localStorage.getItem("profile")));
   }, [location]);
