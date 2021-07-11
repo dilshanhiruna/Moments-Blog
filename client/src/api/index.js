@@ -1,23 +1,26 @@
 import axios from "axios";
 
-const url = process.env.REACT_APP_URL + "posts";
+const API = axios.create({ baseURL: process.env.REACT_APP_URL });
+
 // const url = "https://moment-blog.herokuapp.com/posts";
 
-export const fetchPosts = () => axios.get(url);
+export const fetchPosts = () => axios.get("/posts");
 
 export const createPost = (newPost) => {
-  axios.post(url, newPost);
+  axios.post("/posts", newPost);
 };
 
 export const updatePost = (id, updatePost) => {
-  axios.patch(`${url}/${id}`, updatePost);
+  axios.patch(`${"/posts"}/${id}`, updatePost);
 };
 
 export const deletePost = (id) => {
-  axios.delete(`${url}/${id}`);
+  axios.delete(`${"/posts"}/${id}`);
 };
 
 export const likePost = (id) => {
-  axios.patch(`${url}/${id}/likePost`);
+  axios.patch(`${"/posts"}/${id}/likePost`);
 };
 
+export const signIn = (formData) => API.post("/users/signin", formData);
+export const signUp = (formData) => API.post("/users/signup", formData);
