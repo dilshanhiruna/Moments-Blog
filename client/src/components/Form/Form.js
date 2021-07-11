@@ -8,9 +8,9 @@ import { useSelector, useDispatch } from "react-redux";
 const Form = ({ currentId, setcurrentId }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const user = JSON.parse(localStorage.getItem("profile"));
 
   const [postData, setpostData] = useState({
-    creator: "",
     title: "",
     message: "",
     tags: "",
@@ -27,10 +27,13 @@ const Form = ({ currentId, setcurrentId }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (currentId) {
-      dispatch(updatePost(currentId, postData));
+    if (currentId === 0) {
+      dispatch(createPost({ ...postData, name: user?.result?.name }));
+      clear();
     } else {
-      dispatch(createPost(postData));
+      dispatch(
+        updatePost(currentId, { ...postData, name: user?.result?.name })
+      );
     }
     clear();
   };
@@ -38,13 +41,22 @@ const Form = ({ currentId, setcurrentId }) => {
   const clear = () => {
     setcurrentId(null);
     setpostData({
-      creator: "",
       title: "",
       message: "",
       tags: "",
       selectedFile: "",
     });
   };
+
+  if (!user?.result?.name) {
+    return (
+      <Paper className={classes.paper}>
+        <Typography variant="h6" align="center">
+          Please Sign In
+        </Typography>
+      </Paper>
+    );
+  }
 
   return (
     <Paper className={classes.paper}>
@@ -57,16 +69,6 @@ const Form = ({ currentId, setcurrentId }) => {
         <Typography variant="h6">
           {currentId ? "Editing" : "Create"} a Memory
         </Typography>
-        <TextField
-          name="creator"
-          variant="outlined"
-          label="Creator"
-          fullWidth
-          value={postData.creator}
-          onChange={(e) =>
-            setpostData({ ...postData, creator: e.target.value })
-          }
-        />
         <TextField
           name="title"
           variant="outlined"
